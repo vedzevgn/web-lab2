@@ -73,12 +73,12 @@
         <div class="icon" style="background-image: url(icons/arrow.png);"></div>
         <p>Проверить</p>
       </div>
-      <div class="modalInput">
-        <div class="verticalBox">
+    </div>
+    <div class="modalInput">
+      <div class="verticalBox">
         <div class="inputWrapper">
           <input class="textInput" type="text" id="rDublicate" name="r" placeholder="Значение R"
                  oninvalid='showModalWindow("incorrectValue", "Введено некорректное значение R.");'>
-        </div>
         </div>
       </div>
     </div>
@@ -112,7 +112,7 @@
 </div>
 <div class="contentWrapper">
   <div id="formWrapper">
-    <form method="get" action="${pageContext.request.contextPath}/controller" id="mainForm">
+    <form method="POST" action="${pageContext.request.contextPath}/controller" id="mainForm">
       <div class="centered" style="margin-bottom: 20px;">
         <div class="button" style="margin-right: 20px;" id="areasWindowButton"
              onClick='showModalWindow("areas", "")'>
@@ -197,11 +197,11 @@
       if(list == null){
         list = new LinkedList<Map<String, Object>>();
       }
-
     %>
     <div id="emptyTableMessage">
       <p>Таблица пуста</p>
     </div>
+    <script src="js/pointsOperations.js"></script>
     <div class="tableWrapper">
       <table class="border-none fixedHead" id="resultsTable">
         <thead>
@@ -222,6 +222,7 @@
           <td><%= (boolean) point.get("result") ? "Попадает" : "Не попадает"%></td>
           <td><%= point.get("calculationTime") %></td>
           <td><%= ((LocalDateTime) point.get("time")).format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")) %></td>
+          <script>addPoint(<%= point.get("x") %>, <%= point.get("y") %>, <%= point.get("r") %>)</script>
         </tr>
         <% } %>
         </tbody>

@@ -53,7 +53,7 @@ public class AreaCheckServlet extends HttpServlet {
         }
 
         final long endExec = System.nanoTime();
-        final long executionTime = endExec - startExec;
+        final double executionTime = (endExec - startExec) / 1000000;
         final LocalDateTime executedAt = LocalDateTime.now();
 
         Map<String, Object> point = new HashMap<String, Object>();
@@ -81,6 +81,7 @@ public class AreaCheckServlet extends HttpServlet {
         out.println("  <meta charset=\"UTF-8\">");
         out.println("  <title>Результат проверки</title>");
         out.println("  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script>");
+        out.println("  <script src=\"https://unpkg.com/cookielib/src/cookie.min.js\"></script>");
         out.println("  <link type=\"image/x-icon\" href=\"icons/logo.ico\" rel=\"shortcut icon\">");
         out.println("  <link type=\"Image/x-icon\" href=\"icons/logo.ico\" rel=\"icon\">");
         out.println("  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");

@@ -20,10 +20,15 @@ var roundX = true;
 var autoSend = false;
 
 document.addEventListener("DOMContentLoaded", (event) => {
+    if(document.querySelector(".invalidResult") != null){
+        setTimeout(() => document.querySelector(".invalidResult").style.animation = "shake 400ms ease-in-out", 400);
+    }
+
     roundX = ('true' === getCookie('roundX'));
     autoSend = ('true' === getCookie('autoSend'));
     document.getElementById("roundXSwitch").checked = roundX;
     document.getElementById("autoSendSwitch").checked = autoSend;
+
     checkTable();
 });
 
@@ -96,23 +101,6 @@ function scrollDown(element){
     element.scrollTop = element.scrollHeight;
 }
 
-function sendData(url, dataForSend) {
-    /*$.ajax({
-        type: 'GET',
-        url: url,
-        data: dataForSend,
-        success: (response) => {
-            console.log(response);
-            $('#resultsContainer').html(response);
-            scrollDown(document.getElementById("resultsTable"));
-            checkTable();
-        },
-        error: (error) => {
-            console.log(error);
-        }
-    });*/
-}
-
 $(window).scroll(function () {
     var scroll = $(window).scrollTop();
     if (scroll > 20) {
@@ -143,12 +131,11 @@ function checkTime(i) {
 }
 
 function formSubmit(){
-
     if(!checkInputs()){
         return false;
     } else {
         let form = document.querySelector("form");
-        form.method = 'GET';
+        form.method = 'POST';
         form.submit();
         document.getElementById("clearButton").classList.remove("inactiveButton");
         return true;
@@ -188,7 +175,7 @@ function isPositive(value) {
 
 function clearTable(url) {
     $.ajax({
-        type: 'GET',
+        type: 'POST',
         url: url,
         data: "clear=true",
         success: (response) => {
@@ -301,6 +288,8 @@ rInputs.forEach(r => {r.addEventListener('input', function () {
         rInput.classList.remove('invalid');
         rInputDublicate.classList.add('valid');
         rInputDublicate.classList.remove('invalid');
+        showPoints();
+        repositionPoints(rInput.value);
     } else {
         rInput.classList.add('invalid');
         rInput.classList.remove('valid');
@@ -311,10 +300,11 @@ rInputs.forEach(r => {r.addEventListener('input', function () {
 });
 
 
-const coordinatesBox = document.getElementById('coordinates');
-
 let pointX = 0;
 let pointY = 0;
+
+let cX = centerX;
+let cY = centerY
 
 coordinatesBox.addEventListener('click', function(event) {
     const previousDot = coordinatesBox.querySelector('.previousDot');
@@ -438,6 +428,13 @@ function position(point, nearestX, nearestY, centerX, centerY, r, scale){
         setTimeout(() => {disappear(checkInputs()); closeModalWindow('areasWindow');}, 600);
         setTimeout(() => formSubmit(), 1000);
     }
+}
+
+function addPoint(nearestX, nearestY, r){
+    const point = document.createElement('div');
+    coordinatesBox.appendChild(point);
+    point.style.left = ((centerX + (centerX / r) * nearestX / scale) - 8) + 'px';
+    point.style.top = ((centerY - (centerY / r) * nearestY / scale) - 4) + 'px';
 }
 
 function removePoint(){

@@ -9,13 +9,14 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 
 @WebServlet(name = "controllerServlet", value = "/controller")
 public class ControllerServlet extends HttpServlet {
-    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String forwardPath = getServletContext().getContextPath();
 
-        if (request.getParameter("clear") != null) {
+        if (Objects.equals(request.getParameter("clear"), "true")) {
             LinkedList<Map<String, Object>> list = new LinkedList<Map<String, Object>>();
             getServletContext().setAttribute("pointsList", list);
         }
