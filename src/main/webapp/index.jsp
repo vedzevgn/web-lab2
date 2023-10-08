@@ -1,9 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="model.Point" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.LinkedList" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="model.PointsList" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -14,6 +12,7 @@
   <meta charset="UTF-8">
   <title>Лабораторная работа #1</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/cookielib/src/cookie.min.js"></script>
   <link type="image/x-icon" href="icons/logo.ico" rel="shortcut icon">
   <link type="Image/x-icon" href="icons/logo.ico" rel="icon">
   <meta name="viewport" content="width=device-width, initial-scale=1">

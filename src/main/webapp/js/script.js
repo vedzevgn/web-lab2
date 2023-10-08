@@ -1,15 +1,3 @@
-var roundX = true;
-var autoSend = false;
-
-document.getElementById("roundXSwitch").addEventListener("change", (event) => {
-    roundX = this.checked;
-});
-
-document.getElementById("autoSendSwitch").addEventListener("change", (event) => {
-    roundX = this.checked;
-});
-
-
 function startTime() {
     var today = new Date();
     var h = today.getHours();
@@ -27,6 +15,29 @@ function startTime() {
 }
 
 startTime();
+
+var roundX = true;
+var autoSend = false;
+
+document.addEventListener("DOMContentLoaded", (event) => {
+    roundX = ('true' === getCookie('roundX'));
+    autoSend = ('true' === getCookie('autoSend'));
+    document.getElementById("roundXSwitch").checked = roundX;
+    document.getElementById("autoSendSwitch").checked = autoSend;
+    checkTable();
+});
+
+document.getElementById("roundXSwitch").addEventListener("change", (event) => {
+    roundX = document.getElementById("roundXSwitch").checked;
+    setCookie('roundX', roundX);
+    console.log(roundX);
+});
+
+document.getElementById("autoSendSwitch").addEventListener("change", (event) => {
+    autoSend = document.getElementById("autoSendSwitch").checked;
+    setCookie('autoSend', autoSend);
+    console.log(autoSend);
+});
 
 function checkTable() {
     const table = document.getElementById('resultsTable');
@@ -84,11 +95,6 @@ async function editHint(newText, element) {
 function scrollDown(element){
     element.scrollTop = element.scrollHeight;
 }
-
-document.addEventListener("DOMContentLoaded", (event) => {
-    sendData("");
-    checkTable();
-});
 
 function sendData(url, dataForSend) {
     /*$.ajax({
@@ -171,47 +177,6 @@ function checkInputs(){
     }
 }
 
-    /*document.querySelector("form").addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        let $form = $(this);
-
-        var xInput = document.getElementById("x");
-        var yInput = document.getElementById("y");
-        var rInput = document.getElementById("r");
-
-
-        /*if (xInput.value == '' && yInput.value == '' && zInput.value == '') {
-            event.preventDefault();
-            showModalWindow("incorrectValue", "Пожалуйста, введите необходимые значения.");
-        }*/
-
-/*    if (xInput == null) {
-        event.preventDefault();
-        showModalWindow("incorrectValue", "Пожалуйста, выберите значение для X.");
-    } else if (parseFloat(yInput.value) > 3 || parseFloat(yInput.value) < -3) {
-        event.preventDefault();
-        showModalWindow("incorrectValue", "Пожалуйста, введите значение для Y от -3 до 3.");
-    } else if (rInput == "") {
-        event.preventDefault();
-        showModalWindow("incorrectValue", "Пожалуйста, выберите значение для R.");
-    } else if (!isValid(xInput.value) || !isValid(yInput.value) || (!isValid(rInput.value) && !isPositive(rInput.value))) {
-        event.preventDefault();
-        showModalWindow("incorrectValue", "Проверьте введённые данные.");
-    } else {
-        var today = new Date();
-        var h = today.getHours();
-        var m = today.getMinutes();
-        var s = today.getSeconds();
-        h = checkTime(h);
-        m = checkTime(m);
-        s = checkTime(s);
-        var currentTime = h + ":" + m + ":" + s;
-        var dataForSend = "x=" + xInput.value + "&y=" + yInput.value + "&r=" + rInput.value + "&time=" + currentTime;
-        sendData($form.attr("action"), dataForSend);
-        document.getElementById("clearButton").classList.remove("inactiveButton");
-    }
-});*/
 
 function isValid(value) {
     return !isNaN(parseFloat(value)) && isFinite(value) && value != null;
@@ -446,7 +411,11 @@ function nearest(number) {
         editHint("Значение X не может быть меньше -3", areasHint)
         return -3;
     }
-    return Math.round(number);
+    if(roundX) {
+        return Math.round(number);
+    } else {
+        return number.toFixed(3);
+    }
 }
 
 function checkY(number){
@@ -465,6 +434,10 @@ function position(point, nearestX, nearestY, centerX, centerY, r, scale){
     point.style.left = ((centerX + (centerX / r) * nearestX / scale) - 8) + 'px';
     point.style.top = ((centerY - (centerY / r) * nearestY / scale) - 4) + 'px';
     document.getElementById("interactiveSubmitButton").classList.remove("inactiveButton");
+    if(autoSend){
+        setTimeout(() => {disappear(checkInputs()); closeModalWindow('areasWindow');}, 600);
+        setTimeout(() => formSubmit(), 1000);
+    }
 }
 
 function removePoint(){
@@ -475,8 +448,3 @@ function removePoint(){
         setTimeout(() => point.remove(), 200);
     }
 }
-
-/*function updateY(y){
-    const dot = coordinatesBox.querySelector(".dot");
-    dot.style.left = y + 'px';
-}*/
