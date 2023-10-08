@@ -48,7 +48,7 @@
         <input type="checkbox" id="roundXSwitch">
         <span class="slider round"></span>
       </label>
-      <p>Притигивать значение X к целому числу</p>
+      <p>Притягивать значение X к целому числу</p>
     </div>
     <div class="switchRow">
       <label class="switch">
