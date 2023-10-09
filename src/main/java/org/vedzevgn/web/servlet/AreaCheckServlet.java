@@ -61,7 +61,7 @@ public class AreaCheckServlet extends HttpServlet {
         }
 
         final long endExec = System.nanoTime();
-        final double executionTime = (endExec - startExec) / 1000;
+        final long executionTime = (endExec - startExec);
         final LocalDateTime executedAt = LocalDateTime.now();
 
         Map<String, Object> point = new HashMap<String, Object>();

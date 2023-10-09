@@ -18,6 +18,16 @@ a {
     background-repeat: no-repeat;
 }
 
+#vedzLogo {
+    height: 70px;
+    width: 70px;
+    float: left;
+    background-image: url(icons/vedzLogo.png);
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .header a{
     width: fit-content;
     height: fit-content;
