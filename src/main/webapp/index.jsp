@@ -90,7 +90,7 @@
     </div>
     <p>Вы действительно хотите очистить таблицу с результатами?</p>
     <div class="buttonsPanel">
-      <div class="button deleteButton" onclick="clearTable(); closeModalWindow('clearTableWindow');">
+      <div class="button deleteButton" onclick='clearTable("${pageContext.request.contextPath}/controller"); closeModalWindow("clearTableWindow");'>
         <p>Очистить</p>
       </div>
       <div class="button" id="clearTableWindowButton" onClick="closeModalWindow('clearTableWindow')">

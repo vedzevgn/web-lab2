@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 
 
 @WebServlet(name = "checkServlet", value = "/area-check")
@@ -31,6 +32,7 @@ public class AreaCheckServlet extends HttpServlet {
         final String x = req.getParameter("x");
         final String y = req.getParameter("y");
         final String r = req.getParameter("r");
+        final String clear = req.getParameter("clear");
 
         final double dx;
         final double dy;
@@ -53,13 +55,13 @@ public class AreaCheckServlet extends HttpServlet {
         final boolean result = checkArea(dx, dy, dr);
 
         LinkedList<Map<String, Object>> list = (LinkedList<Map<String, Object>>) servletContext.getAttribute("pointsList");
-        if (list == null) {
+        if (list == null || Objects.equals(clear, "true")) {
             list = new LinkedList<Map<String, Object>>();
             servletContext.setAttribute("pointsList", list);
         }
 
         final long endExec = System.nanoTime();
-        final double executionTime = (endExec - startExec) / 1000000;
+        final double executionTime = (endExec - startExec) / 1000;
         final LocalDateTime executedAt = LocalDateTime.now();
 
         Map<String, Object> point = new HashMap<String, Object>();
@@ -85,8 +87,7 @@ public class AreaCheckServlet extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
         out.println("  <meta charset=\"UTF-8\">");
-//        out.println("  <title>Результат проверки</title>");
-        out.println("  <title>Тут был Егор</title>");
+        out.println("  <title>Результат проверки</title>");
         out.println("  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script>");
         out.println("  <script src=\"https://unpkg.com/cookielib/src/cookie.min.js\"></script>");
         out.println("  <link type=\"image/x-icon\" href=\"icons/logo.ico\" rel=\"shortcut icon\">");
@@ -163,7 +164,7 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     private boolean checkInCircle(final double x, final double y, final double r){
-        return x < 0 && y < 0 && Math.sqrt(x * x + y * y) <= r;
+        return x < 0 && y > 0 && Math.sqrt(x * x + y * y) <= r;
     }
 
     private boolean checkArea(final double x, final double y, final double r) {

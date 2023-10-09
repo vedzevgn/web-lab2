@@ -16,7 +16,7 @@ public class ControllerServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String forwardPath = getServletContext().getContextPath();
 
-        if (Objects.equals(request.getParameter("clear"), "true")) {
+        if (request.getParameter("clear") != null) {
             LinkedList<Map<String, Object>> list = new LinkedList<Map<String, Object>>();
             getServletContext().setAttribute("pointsList", list);
         }

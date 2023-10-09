@@ -179,7 +179,7 @@ function clearTable(url) {
         url: url,
         data: "clear=true",
         success: (response) => {
-            var table = document.getElementById("resultsTable");
+            let table = document.getElementById("resultsTable");
             while (table.rows.length > 1) {
                 table.deleteRow(1);
             }
