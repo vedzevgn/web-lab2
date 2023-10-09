@@ -20,7 +20,6 @@ function repositionPoints(r){
     if(points.length > 0) {
         for (let i = 0; i < points.length; i++) {
             let originR = +(points[i].dataset.radius);
-            console.log("i: " + i + " prevR: " + originR);
             points[i].style.left = ((+(points[i].dataset.left) - centerX) * (originR / r) + centerX) + 'px';
             points[i].style.top = ((+(points[i].dataset.top) - centerY) * (originR / r) + centerY) + 'px';
         }

@@ -283,6 +283,8 @@ rInputs.forEach(r => {r.addEventListener('input', function () {
         rInput.classList.remove('valid');
         rInputDublicate.classList.add('invalid');
         rInputDublicate.classList.remove('valid');
+        hidePoints();
+        editHint("Значение R может состоять только из цифр и точки", areasHint);
     } else if (+(value) >= 2 && +(value) <= 5) {
         rInput.classList.add('valid');
         rInput.classList.remove('invalid');
@@ -295,6 +297,8 @@ rInputs.forEach(r => {r.addEventListener('input', function () {
         rInput.classList.remove('valid');
         rInputDublicate.classList.add('invalid');
         rInputDublicate.classList.remove('valid');
+        hidePoints();
+        editHint("Значение R должно быть равно от 2 до 5", areasHint);
     }
 });
 });

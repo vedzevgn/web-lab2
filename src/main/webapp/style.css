@@ -5,6 +5,7 @@ body {
 
 a {
     text-decoration: none;
+    color: black;
 }
 
 #logo {
@@ -778,7 +779,20 @@ input:checked + .slider:before {
     align-items: center;
 }
 
+.screenCentered{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
 
+#errorIcon{
+    height: 120px;
+    width: 120px;
+    margin-bottom: 12px;
+}
 
 @media screen and (max-width: 1000px) {
     .wideHeader {
@@ -973,7 +987,7 @@ input:checked + .slider:before {
         color: white;
     }
 
-    #clearButton .icon{
+    #clearButton .icon, #errorIcon{
         filter: invert(0);
     }
 

@@ -44,6 +44,12 @@ public class AreaCheckServlet extends HttpServlet {
             resp.sendError(400);
             return;
         }
+
+        if(!validateXYR(dx, dy, dr)) {
+            resp.sendError(400, "Некорректный запрос");
+            return;
+        }
+
         final boolean result = checkArea(dx, dy, dr);
 
         LinkedList<Map<String, Object>> list = (LinkedList<Map<String, Object>>) servletContext.getAttribute("pointsList");
@@ -79,7 +85,8 @@ public class AreaCheckServlet extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
         out.println("  <meta charset=\"UTF-8\">");
-        out.println("  <title>Результат проверки</title>");
+//        out.println("  <title>Результат проверки</title>");
+        out.println("  <title>Тут был Егор</title>");
         out.println("  <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js\"></script>");
         out.println("  <script src=\"https://unpkg.com/cookielib/src/cookie.min.js\"></script>");
         out.println("  <link type=\"image/x-icon\" href=\"icons/logo.ico\" rel=\"shortcut icon\">");
@@ -164,5 +171,13 @@ public class AreaCheckServlet extends HttpServlet {
         boolean inTriangle = (x <= 0 && y <= 0 && y >= (x / 2 + r / 2));
         boolean inArea = (x >= 0 && x <= r && y <= 0 && y >= -r/2);
         return inCircle || inTriangle || inArea;
+    }
+
+    private boolean validateXYR(double x, double y, double r) {
+        if (x >= -3 && x <= 5 && y >= -3 && y <= 3 && r >= 2 && r <= 5) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
